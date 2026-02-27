@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorado Roleplay — Registro Judicial</title>
+  <link rel="icon" type="image/png" href="LogoColorado.png">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Rye&family=Special+Elite&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="colorado-cavalaria.css">
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="masthead">
+      <img src="LogoColorado.png" alt="Logo Colorado Roleplay" class="masthead-logo">
+      <div class="masthead-top">Território do Colorado · Ano do Senhor 1901</div>
+      <div class="masthead-rule">✦</div>
+      <h1>Cavalaria Colorado
+        <em>Registro Oficial de Infrações &amp; Sentenças</em>
+      </h1>
+      <div class="masthead-rule">✦</div>
+    </div>
+
+    <div class="fields-bar">
+      <div class="field-cell">
+        <label>🪖 Oficial Responsável</label>
+        <input type="text" id="f-official" placeholder="Nome do militar">
+      </div>
+      <div class="field-cell">
+        <label>👤 Nome do Preso</label>
+        <input type="text" id="f-prisoner" placeholder="Nome completo">
+      </div>
+      <div class="field-cell">
+        <label>🪪 RG do Preso</label>
+        <input type="text" id="f-rg" placeholder="000-000">
+      </div>
+      <div class="field-cell">
+        <label>⚖️ ID do Advogado</label>
+        <input type="text" id="f-lawyer" placeholder="— sem advogado —">
+      </div>
+    </div>
+
+    <div class="body-layout">
+
+      <div class="crimes-col">
+        <div class="col-title">Código Penal — Artigos Aplicáveis</div>
+        <div id="crimes-dynamic-root">
+          <div class="loading-crimes-msg">Carregando crimes da tabela...</div>
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="sidebar-col">
+
+        <div class="side-block">
+          <div class="side-block-title">⚖️ Pena Calculada</div>
+          <div class="side-block-body">
+            <div class="sentence-stamp">
+              <div class="stamp-ring">
+                <div class="stamp-number" id="sentence-total">0</div>
+                <div class="stamp-unit">meses</div>
+              </div>
+            </div>
+            <div class="sentence-breakdown" id="sentence-breakdown"></div>
+          </div>
+        </div>
+
+        <div class="side-block">
+          <div class="side-block-title">📋 Crimes Imputados</div>
+          <div class="side-block-body">
+            <div id="selected-list"><span class="no-crimes-msg">Nenhum crime selecionado.</span></div>
+          </div>
+        </div>
+
+        <div class="side-block">
+          <div class="side-block-title">📦 Itens &amp; Evidências</div>
+          <div class="side-block-body items-group">
+            <label>Itens Apreendidos</label>
+            <textarea id="items-field" rows="3" placeholder="Descreva os itens..."></textarea>
+            <label>Dinheiro Sujo (R$)</label>
+            <input type="text" id="money-field" placeholder="0,00">
+          </div>
+        </div>
+
+        <div class="side-block">
+          <div class="side-block-title">✅ Atenuantes</div>
+          <div class="side-block-body mod-list">
+            <div class="mod-item" data-type="mit" data-value="-10" data-label="Réu primário: Redução de 10%"
+              onclick="tm(this)">
+              <div class="mod-dot"></div> Réu Primário <span class="mod-pct">-10%</span>
+            </div>
+            <div class="mod-item" data-type="mit" data-value="-20" data-label="Bom comportamento: Redução de 20%"
+              onclick="tm(this)">
+              <div class="mod-dot"></div> Bom Comportamento <span class="mod-pct">-20%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-block">
+          <div class="side-block-title">❌ Agravantes</div>
+          <div class="side-block-body mod-list">
+            <div class="mod-item" data-type="agr" data-value="+10" data-label="Réu reincidente: Aumento de 10%"
+              onclick="tm(this)">
+              <div class="mod-dot"></div> Réu Reincidente <span class="mod-pct">+10%</span>
+            </div>
+            <div class="mod-item" data-type="agr" data-value="+20" data-label="Mau comportamento: Aumento de 20%"
+              onclick="tm(this)">
+              <div class="mod-dot"></div> Mau Comportamento <span class="mod-pct">+20%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="side-block">
+          <div class="side-block-title">📌 Observações</div>
+          <div class="side-block-body mod-list">
+            <div class="mod-item" data-type="obs" data-label="Mandado de Busca" onclick="tm(this)">
+              <div class="mod-dot"></div> Mandado de Busca
+            </div>
+            <div class="mod-item" data-type="obs" data-label="🔫 Possui porte de arma" onclick="tm(this)">
+              <div class="mod-dot"></div> Porte de Arma
+            </div>
+            <div class="mod-item" data-type="obs" data-label="Fiança aplicada" onclick="tm(this)">
+              <div class="mod-dot"></div> Fiança
+            </div>
+            <div class="mod-item" data-type="obs" data-label="Preso reanimado em campo" onclick="tm(this)">
+              <div class="mod-dot"></div> Reanimado
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-copy" onclick="copyReport()">Copiar Relatório</button>
+          <button class="btn btn-clear" onclick="clearAll()">Limpar Tudo</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="page-footer">
+      Território do Colorado · Departamento de Ordem Pública · Registro Confidencial<br>
+      By: <a href="https://github.com/RianGBispo" target="_blank" rel="noopener noreferrer">RianGBispo</a>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">✓ Relatório copiado!</div>
+
+  <script src="colorado-cavalaria.js"></script>
+</body>
+
+</html>
